@@ -14,6 +14,6 @@ namespace TodoApp.Application.Features.Todo.Commands.CreateTodo
 
         }
 
-        public CreateTodoDto Category { get; set; }
+        public CreateTodoDto Todo { get; set; }
     }
 }

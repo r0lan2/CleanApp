@@ -77,7 +77,7 @@ namespace TodoApp.Api
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "GloboTicket Ticket Management API",
+                    Title = "Todo Management API",
 
                 });
 
@@ -100,7 +100,7 @@ namespace TodoApp.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GloboTicket Ticket Management API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API");
             });
 
             app.UseCustomExceptionHandler();

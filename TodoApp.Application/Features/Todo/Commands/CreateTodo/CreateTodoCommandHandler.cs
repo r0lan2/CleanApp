@@ -45,7 +45,7 @@ namespace TodoApp.Application.Features.Todo.Commands.CreateTodo
                 var newTodo = new Domain.Entities.Todo() { Description = request.Description, IsDone=request.IsDone };
 
                 newTodo = await _todoRepository.AddAsync(newTodo);
-                createCategoryCommandResponse.Category = _mapper.Map<CreateTodoDto>(newTodo);
+                createCategoryCommandResponse.Todo = _mapper.Map<CreateTodoDto>(newTodo);
             }
 
             return createCategoryCommandResponse;
