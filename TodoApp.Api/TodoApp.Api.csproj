@@ -26,9 +26,4 @@
     <ProjectReference Include="..\TodoApp.Persistence\TodoApp.Persistence.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
