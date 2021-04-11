@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Net.Http;
 
 namespace TodoApp.IntegrationTests.Base
@@ -16,7 +17,6 @@ namespace TodoApp.IntegrationTests.Base
         {
             builder.ConfigureServices(services =>
             {
-
                 services.AddDbContext<TodoAppDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("TodoDbContextInMemoryTest");
