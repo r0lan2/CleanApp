@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using TodoApp.Application.Features.Todo.Queries;
 using TodoApp.Application.Features.Todo.Commands.CreateTodo;
 
@@ -10,6 +11,7 @@ namespace TodoApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TodoController : ControllerBase
     {
 
