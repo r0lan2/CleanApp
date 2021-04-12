@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using TodoApp.Api.Middleware;
 using TodoApp.Api.Utility;
 using TodoApp.Application;
+using TodoApp.Identity;
 using TodoApp.Persistence;
 
 namespace TodoApp.Api
@@ -28,7 +29,7 @@ namespace TodoApp.Api
             services.AddApplicationServices();
             //services.AddInfrastructureServices(Configuration);
             services.AddPersistenceServices(Configuration);
-            //services.AddIdentityServices(Configuration);
+            services.AddIdentityServices(Configuration);
 
             //services.AddScoped<ILoggedInUserService, LoggedInUserService>();
 
