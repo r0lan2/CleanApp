@@ -33,14 +33,14 @@ namespace TodoApp.Application.UnitTests.Todo.Commands
         }
 
         [Fact]
-        public async Task Handle_ValidCategory_AddedToCategoriesRepo()
+        public async Task Handle_ValidTodo_AddedToTodoRepo()
         {
             var handler = new CreateTodoCommandHandler(_mapper, _todoRepository.Object);
 
             await handler.Handle(new CreateTodoCommand() { Description = "Test",IsDone = true}, CancellationToken.None);
 
-            var allCategories = await _todoRepository.Object.ListAllAsync();
-            allCategories.Count.ShouldBe(3);
+            var alltodos = await _todoRepository.Object.ListAllAsync();
+            alltodos.Count.ShouldBe(3);
         }
 
 

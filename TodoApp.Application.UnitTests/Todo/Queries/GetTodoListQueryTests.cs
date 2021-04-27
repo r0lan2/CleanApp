@@ -34,7 +34,7 @@ namespace TodoApp.Application.UnitTests.Todo.Queries
         }
 
         [Fact]
-        public async Task GetCategoriesListTest()
+        public async Task GetTodoListTest()
         {
             var handler = new TodoListQueryHandler(_mapper, _todoRepository.Object);
 

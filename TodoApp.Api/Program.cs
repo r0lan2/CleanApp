@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Formatting.Json;
+using TodoApp.Application.Models.Authentication;
 using TodoApp.Identity;
 
 namespace TodoApp.Api
@@ -23,7 +25,9 @@ namespace TodoApp.Api
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(config)
-                .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+                //.Destructure.ByTransforming<AuthenticationRequest>(
+                //    r => new { user = r.Email, pass = r.Password })
+                .WriteTo.File(new JsonFormatter(), "Logs/log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             var host = CreateHostBuilder(args).Build();
