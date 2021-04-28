@@ -6,7 +6,9 @@ using TodoApp.Application.Contracts.Persistence;
 using AutoMapper;
 using System.Threading;
 using System.Collections.Generic;
-
+using FluentValidation.Results;
+using TodoApp.Application.Extensions;
+using TodoApp.Application.Responses;
 
 namespace TodoApp.Application.Features.Todo.Commands.CreateTodo
 {
@@ -31,27 +33,24 @@ namespace TodoApp.Application.Features.Todo.Commands.CreateTodo
             var validator = new CreateTodoCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
 
-            if (validationResult.Errors.Count > 0)
+            if (!validationResult.IsValid)
             {
-                createCategoryCommandResponse.Success = false;
-                createCategoryCommandResponse.ValidationErrors = new List<string>();
-                foreach (var error in validationResult.Errors)
-                {
-                    createCategoryCommandResponse.ValidationErrors.Add(error.ErrorMessage);
-                }
+                createCategoryCommandResponse.SetValidationsWhenValidationsAreNotOk(validationResult);
             }
+
             if (createCategoryCommandResponse.Success)
             {
                 var newTodo = new Domain.Entities.Todo() { Description = request.Description, IsDone=request.IsDone };
 
                 newTodo = await _todoRepository.AddAsync(newTodo);
+
                 createCategoryCommandResponse.Todo = _mapper.Map<CreateTodoDto>(newTodo);
             }
 
             return createCategoryCommandResponse;
         }
 
-
+       
 
     }
 }
