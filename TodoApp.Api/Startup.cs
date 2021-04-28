@@ -5,11 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
-using TodoApp.Api.Middleware;
+using Microsoft.Data.SqlClient;
 using TodoApp.Api.Utility;
 using TodoApp.Application;
 using TodoApp.Identity;
 using TodoApp.Persistence;
+using TodoApp.Api.Middleware.Exceptions;
 
 namespace TodoApp.Api
 {
@@ -104,7 +105,16 @@ namespace TodoApp.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API");
             });
 
-            app.UseCustomExceptionHandler();
+         
+            app.UseApiExceptionHandler(options => options.AddResponseDetails = (context,  ex,  error) =>
+            {
+                if (ex.GetType().Name == nameof(SqlException))
+                {
+                    error.Detail = "Exception was a database exception!";
+                }
+            });
+
+
 
             app.UseCors("Open");
 
