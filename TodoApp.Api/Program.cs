@@ -25,8 +25,6 @@ namespace TodoApp.Api
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(config)
-                //.Destructure.ByTransforming<AuthenticationRequest>(
-                //    r => new { user = r.Email, pass = r.Password })
                 .WriteTo.File(new JsonFormatter(), "Logs/log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
@@ -40,9 +38,9 @@ namespace TodoApp.Api
                 try
                 {
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
                     await Identity.Seed.UserCreator.SeedAsync(userManager);
                     Log.Information("Application Starting");
+                    host.Run();
                 }
                 catch (Exception ex)
                 {
@@ -50,7 +48,7 @@ namespace TodoApp.Api
                 }
             }
 
-            host.Run();
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

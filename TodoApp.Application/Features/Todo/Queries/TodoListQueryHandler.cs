@@ -6,11 +6,12 @@ using MediatR;
 using TodoApp.Application.Contracts.Persistence;
 using AutoMapper;
 using System.Threading;
+using TodoApp.Application.Paging;
 
 
 namespace TodoApp.Application.Features.Todo.Queries
 {
-    public class TodoListQueryHandler : IRequestHandler<GetTodoListQuery, List<TodoListVm>>
+    public class TodoListQueryHandler : IRequestHandler<GetTodoListQuery, PagedListTodoVm>
     {
 
         private readonly IAsyncRepository<Domain.Entities.Todo> _todoRepository;
@@ -24,11 +25,22 @@ namespace TodoApp.Application.Features.Todo.Queries
 
 
 
-        public async Task<List<TodoListVm>> Handle(GetTodoListQuery request, CancellationToken cancellationToken)
+        public async Task<PagedListTodoVm> Handle(GetTodoListQuery request, CancellationToken cancellationToken)
         {
             var allTodos = (await _todoRepository.ListAllAsync()).OrderBy(x => x.Description);
-            return _mapper.Map<List<TodoListVm>>(allTodos);
+
+            request.PageOptions.SetupRestOfDto(allTodos);
+
+            var todos = _mapper.Map<List<TodoListVm>>(allTodos.Page(request.PageOptions.PageNum -1, request.PageOptions.PageSize));
+
+            var output = new PagedListTodoVm(todos, request.PageOptions);
+
+            return output;
+
         }
+
+
+
 
 
     }

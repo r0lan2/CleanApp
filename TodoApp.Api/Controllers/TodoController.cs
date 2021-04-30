@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using TodoApp.Application.Features.Todo.Queries;
 using TodoApp.Application.Features.Todo.Commands.CreateTodo;
+using TodoApp.Application.Paging;
 
 namespace TodoApp.Api.Controllers
 {
@@ -26,9 +27,14 @@ namespace TodoApp.Api.Controllers
         //[Authorize]
         [HttpGet("all", Name = "GetAllTodos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<TodoListVm>>> GetAllTodos()
+        public async Task<ActionResult<List<TodoListVm>>> GetAllTodos([FromBody] GetTodoListQuery options)
         {
-            var dtos = await _mediator.Send(new GetTodoListQuery());
+            //TODO: Remove this line.
+            var dtos = await _mediator.Send(new GetTodoListQuery(){ PageOptions =  new SortFilterPageOptions()
+            {
+                PageNum = 2,
+                PageSize = 10
+            }});
             return Ok(dtos);
         }
 
