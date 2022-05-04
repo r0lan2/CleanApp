@@ -42,7 +42,7 @@ namespace TodoApp.Application.UnitTests.Todo.Queries
 
             result.ShouldBeOfType<List<TodoListVm>>();
 
-            result.Count.ShouldBe(2);
+            result.TodoList.ToList().Count.ShouldBe(2);
         }
 
 

@@ -27,14 +27,14 @@ namespace TodoApp.Api.Controllers
         //[Authorize]
         [HttpGet("all", Name = "GetAllTodos")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<TodoListVm>>> GetAllTodos([FromBody] GetTodoListQuery options)
+        public async Task<ActionResult<PagedListTodoVm>> GetAllTodos(int pageNum, int pageSize)
         {
-            //TODO: Remove this line.
             var dtos = await _mediator.Send(new GetTodoListQuery(){ PageOptions =  new SortFilterPageOptions()
             {
-                PageNum = 2,
-                PageSize = 10
-            }});
+                PageNum = pageNum,
+                PageSize = pageSize
+            }
+            });
             return Ok(dtos);
         }
 
