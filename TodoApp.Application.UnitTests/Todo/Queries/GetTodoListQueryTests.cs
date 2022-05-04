@@ -10,6 +10,7 @@ using Shouldly;
 using TodoApp.Application.Contracts.Persistence;
 using TodoApp.Application.Features.Todo.Commands.CreateTodo;
 using TodoApp.Application.Features.Todo.Queries;
+using TodoApp.Application.Paging;
 using TodoApp.Application.Profiles;
 using TodoApp.Application.UnitTests.Mocks;
 using Xunit;
@@ -38,9 +39,9 @@ namespace TodoApp.Application.UnitTests.Todo.Queries
         {
             var handler = new TodoListQueryHandler(_mapper, _todoRepository.Object);
 
-            var result = await handler.Handle(new GetTodoListQuery(), CancellationToken.None);
+            var result = await handler.Handle(new GetTodoListQuery(){PageOptions = new SortFilterPageOptions(){PageSize = 10,PageNum = 1}}, CancellationToken.None);
 
-            result.ShouldBeOfType<List<TodoListVm>>();
+            result.ShouldBeOfType<PagedListTodoVm>();
 
             result.TodoList.ToList().Count.ShouldBe(2);
         }
