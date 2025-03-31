@@ -19,7 +19,5 @@ namespace TodoApp.Application.Extensions
                 response.ValidationErrors.Add(error.ErrorMessage);
             }
         }
-
-
     }
 }

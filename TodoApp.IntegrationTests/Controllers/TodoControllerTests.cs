@@ -26,16 +26,16 @@ namespace TodoApp.IntegrationTests.Controllers
         {
             var client = _factory.GetAnonymousClient();
 
-            var response = await client.GetAsync("/api/todo/all");
+            var response = await client.GetAsync("/api/todo/all=pageNum=1&pageSize=10");
 
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
 
-            var result = JsonConvert.DeserializeObject<List<TodoListVm>>(responseString);
+            var result = JsonConvert.DeserializeObject<PagedListTodoVm>(responseString);
 
-            Assert.IsType<List<TodoListVm>>(result);
-            Assert.NotEmpty(result);
+            Assert.IsType<PagedListTodoVm>(result);
+            Assert.NotEmpty(result.TodoList);
         }
     }
 }
